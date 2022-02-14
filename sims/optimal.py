@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import IPython.display as display
 
 import numpy as np
-import plotting
+from utils import plotting
 from ai_economist import foundation
 
 def sample_random_action(agent, mask):
