@@ -25,17 +25,17 @@ if __name__ == "__main__":
     }
 
     st.sidebar.title("Settings")
-
     model_select = st.sidebar.radio("Select Environment", list(PAGES.keys()))
-    st.sidebar.markdown("***")
 
+    st.sidebar.markdown("***")
     animate = st.sidebar.checkbox("Animate Simulation?", value=True)
-    iterations = st.sidebar.number_input('Iterations / Steps', value=1000, min_value=1)
-    plt_every = st.sidebar.number_input('Plot Every', value=100, min_value=1)
-    num_agents = st.sidebar.number_input('Number of Agents', value=4, min_value=2)
+    iterations = st.sidebar.number_input('Iterations / Steps', value=1000, min_value=1, disabled=(not animate))
+    plt_every = st.sidebar.number_input('Plot Every', value=100, min_value=1, disabled=(not animate))
+    save = st.sidebar.checkbox("Save simulation to gif?", value=False, disabled=(not animate))
 
     st.sidebar.text("")
-    save = st.sidebar.checkbox("Save simulation to gif?", value=False, disabled=(not animate))
+    num_agents = st.sidebar.number_input('Number of Agents', value=4, min_value=2)
+
 
     page = PAGES[model_select]
     page.sim_page(iterations, animate, plt_every, num_agents, save)
