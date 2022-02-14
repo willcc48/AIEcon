@@ -1,22 +1,15 @@
 # AI Economist Policy
-Web dashboard and extension of Salesforce's AI Economist multi-agent reinforcement learning tax policy environment. Streamlit is being used as a Python web framework. Conda environment was used with Python 3.7.
+Web dashboard and extension of Salesforce's AI Economist multi-agent reinforcement learning tax policy environment. Streamlit is being used as a Python web framework. Conda environment used with Python 3.7. ai_economist directory holds base code and agent models, etc.
+
+Install AI Economist locally, allowing for custom changes in AI Economist environments and models.
 
       cd ai-economist
       pip install -e .
-  
-Typical packages needed like matplotlib, numpy (use conda environment). Also:
+      
+Also:
 
       pip install streamlit
-  
-In scripts directory:
 
-      streamlit run main.py
+Typical packages are needed like matplotlib, numpy (use conda environment). In ./app:
 
-ai_economist directory holds base code and agent models.
-
-
-
-
-Push with:
-
-      git push -u origin main
+      streamlit run app.py
