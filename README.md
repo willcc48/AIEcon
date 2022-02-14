@@ -6,10 +6,10 @@ Install AI Economist locally, allowing for custom changes in AI Economist enviro
       cd ai-economist
       pip install -e .
       
-Also:
+Install web interface. Also, typical packages are needed like matplotlib, numpy (use conda environment).
 
       pip install streamlit
 
-Typical packages are needed like matplotlib, numpy (use conda environment). In ./app:
+ In app folder,
 
       streamlit run app.py
