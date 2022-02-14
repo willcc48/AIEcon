@@ -7,8 +7,9 @@ Setup conda environment and clone project:
       conda activate env_name
       git clone https://github.com/willcc48/AIEcon.git
 
-Install AI Economist locally, allowing for custom changes in AI Economist environments and models. Run setup from root project directory:
+Install AI Economist locally, allowing for custom changes in AI Economist environments and models. Run setup from ai_economist directory:
 
+      cd ai_economist
       pip install -e .
       
 Install Streamlit for web:
