@@ -1,5 +1,5 @@
 import streamlit as st
-import optimal_tax as optax
+import optimal as optax
 import covid
 
 if __name__ == "__main__":
