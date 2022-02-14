@@ -36,10 +36,11 @@ def fig2nparr(fig):
     buf = np.roll ( buf, 3, axis = 2 )
     return buf
 
-def init(iters):
+def init(iters, num_agents):
     import envs
     cfg = envs.opt_config
     cfg['episode_length'] = iters
+    cfg['n_agents'] = num_agents
     envs = foundation.make_env_instance(**cfg)
     obs = envs.reset()
     return envs, obs
@@ -49,7 +50,7 @@ def breakdown(env):
     (fig0, fig1, fig2), _, _, _, _ = plotting.breakdown(dense_log)
     return fig0, fig1, fig2
 
-def play_random_episode(env, obs, placeholder, plot_every=100, save=False):
+def play_random_episode(env, obs, placeholder, animate, plot_every, save):
     fig, ax = plt.subplots(1, 1, figsize=(10, 10))
     obs = env.reset(force_dense_logging=True)
 
@@ -58,31 +59,32 @@ def play_random_episode(env, obs, placeholder, plot_every=100, save=False):
         actions = sample_random_actions(env, obs)
         obs, rew, done, info = env.step(actions)
         
+        if animate:
+            display.clear_output(wait=True)
+            if ((t+1) % plot_every) == 0:
+                do_plot(env, ax)
+                np_img = fig2nparr(fig)
+                placeholder.image(fig2nparr(fig))
+                if save: frames.append(np_img)
+    if animate:
         display.clear_output(wait=True)
-        if ((t+1) % plot_every) == 0:
+        if ((t+1) % plot_every) != 0:
             do_plot(env, ax)
             np_img = fig2nparr(fig)
             placeholder.image(fig2nparr(fig))
-            if save: frames.append(np_img)
+            if save: frames.append(np_img)    
+        
+        if save:
+            save_file = './gifs/opt.gif'
+            fps = 5
 
-    display.clear_output(wait=True)
-    if ((t+1) % plot_every) != 0:
-        do_plot(env, ax)
-        np_img = fig2nparr(fig)
-        placeholder.image(fig2nparr(fig))
-        if save: frames.append(np_img)    
-    
-    if save:
-        save_file = './gifs/opt.gif'
-        fps = 5
+            from moviepy.editor import ImageSequenceClip
+            gif = ImageSequenceClip(list(frames), fps=fps)
+            gif.write_gif(save_file, fps=fps)
+        
+            st.write(f"gif saved to: {save_file}")
 
-        from moviepy.editor import ImageSequenceClip
-        gif = ImageSequenceClip(list(frames), fps=fps)
-        gif.write_gif(save_file, fps=fps)
-    
-        st.write(f"gif saved to: {save_file}")
-
-def model_page(iterations, plt_every, save):
+def sim_page(iterations, animate, plt_every, num_agents, save):
     st.title('Optimal Tax Policy')
     st.text("")
 
@@ -90,10 +92,11 @@ def model_page(iterations, plt_every, save):
         st.markdown("***")
         st.write("Running...")
 
-        env, obs = init(iterations)
+        env, obs = init(iterations, num_agents)
         placeholder = st.empty()
 
-        play_random_episode(env, obs, placeholder, plot_every=plt_every, save=save)
+        play_random_episode(env, obs, placeholder, animate, plt_every, save)
+        st.write("Done!")
 
         fig0, fig1, fig2 = breakdown(env)
 

@@ -1,6 +1,6 @@
 import streamlit as st
 import optimal as optax
-import covid
+#import covid
 
 if __name__ == "__main__":
 
@@ -19,7 +19,7 @@ if __name__ == "__main__":
 
     PAGES = {
         "Optimal Tax": optax,
-        "COVID-19": covid,
+        #"COVID-19": covid,
         "Climate": None,
         "Learn More": None,
     }
@@ -29,12 +29,14 @@ if __name__ == "__main__":
     model_select = st.sidebar.radio("Select Environment", list(PAGES.keys()))
     st.sidebar.markdown("***")
 
+    animate = st.sidebar.checkbox("Animate Simulation?", value=True)
     iterations = st.sidebar.number_input('Iterations / Steps', value=1000, min_value=1)
     plt_every = st.sidebar.number_input('Plot Every', value=100, min_value=1)
-    
+    num_agents = st.sidebar.number_input('Number of Agents', value=4, min_value=2)
+
     st.sidebar.text("")
-    save = st.sidebar.checkbox("Save simulation to gif?")
+    save = st.sidebar.checkbox("Save simulation to gif?", value=False, disabled=(not animate))
 
     page = PAGES[model_select]
-    page.model_page(iterations, plt_every, save)
+    page.sim_page(iterations, animate, plt_every, num_agents, save)
     

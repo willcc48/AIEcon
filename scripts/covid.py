@@ -68,15 +68,16 @@ def fetch_env_dense_log(
         env.step(action_seq[t]);
     return env._dense_log
 
-def init(iters):
+def init(iters, num_agents):
     import envs
     cfg = envs.opt_config
     cfg['episode_length'] = iters
+    cfg['n_agents'] = num_agents
     envs = foundation.make_env_instance(**cfg)
     obs = envs.reset()
     return envs, obs
 
-def model_page(iterations, plt_every, save):
+def sim_page(iterations, plt_every, num_agents, save):
     st.title('COVID-19 Policy')
     st.text("")
 
@@ -99,9 +100,9 @@ def model_page(iterations, plt_every, save):
             action_type="real_world"
         )
 
-        env, obs = init(iterations)
+        env, obs = init(iterations, num_agents)
         placeholder = st.empty()
-
+m
         play_random_episode(env, obs, placeholder, plot_every=plt_every, save=save)
 
         fig0, fig1, fig2 = breakdown(env)
