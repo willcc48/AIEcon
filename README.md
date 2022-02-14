@@ -12,4 +12,11 @@ In scripts directory:
 
       streamlit run main.py
 
-ai_economist directory holds base code and agent models
+ai_economist directory holds base code and agent models.
+
+
+
+
+Push with:
+
+      git push -u origin main
