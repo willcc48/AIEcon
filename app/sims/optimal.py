@@ -91,13 +91,15 @@ def sim_page(iterations, animate, plt_every, num_agents, save):
     if st.button("Run Simulation"):
         st.markdown("***")
         st.write("Running...")
+        done_empty = st.empty()
 
         env, obs = init(iterations, num_agents)
-        placeholder = st.empty()
+        analytics_empty = st.empty()
 
-        play_random_episode(env, obs, placeholder, animate, plt_every, save)
-        st.write("Done!")
-
+        play_random_episode(env, obs, analytics_empty, animate, plt_every, save)
+        
+        done_empty.write("Done!")
+        
         fig0, fig1, fig2 = breakdown(env)
 
         st.subheader("Analytics")
